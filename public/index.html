@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Event App</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <header>
+        <h1>🎟️ Tech Event App</h1>
+        <nav>
+            <button class="tab-btn active" data-tab="users">Users</button>
+            <button class="tab-btn" data-tab="events">Events</button>
+            <button class="tab-btn" data-tab="register">Register</button>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- ── USERS TAB ── -->
+        <section id="tab-users" class="tab active">
+            <div class="card">
+                <h2>Create User</h2>
+                <form id="createUserForm">
+                    <input type="text"  id="userName"  placeholder="Full name"    required />
+                    <input type="email" id="userEmail" placeholder="Email address" required />
+                    <button type="submit">Add User</button>
+                </form>
+                <p id="userMsg" class="msg"></p>
+            </div>
+
+            <div class="card">
+                <h2>All Users</h2>
+                <button id="loadUsersBtn">Load Users</button>
+                <div id="userList" class="list"></div>
+            </div>
+        </section>
+
+        <!-- ── EVENTS TAB ── -->
+        <section id="tab-events" class="tab">
+            <div class="card">
+                <h2>Host an Event</h2>
+                <form id="createEventForm">
+                    <input type="text"           id="eventTitle"       placeholder="Event title"   required />
+                    <input type="text"           id="eventDescription" placeholder="Description"   required />
+                    <input type="datetime-local" id="eventDate"                                    required />
+                    <input type="text"           id="eventLocation"    placeholder="Location"      required />
+                    <input type="number"         id="eventCapacity"    placeholder="Capacity"      required />
+                    <input type="number"         id="eventHostId"      placeholder="Host User ID"  required />
+                    <button type="submit">Create Event</button>
+                </form>
+                <p id="eventMsg" class="msg"></p>
+            </div>
+
+            <div class="card">
+                <h2>All Events</h2>
+                <button id="loadEventsBtn">Load Events</button>
+                <div id="eventList" class="list"></div>
+            </div>
+        </section>
+
+        <!-- ── REGISTER TAB ── -->
+        <section id="tab-register" class="tab">
+            <div class="card">
+                <h2>Book a Seat</h2>
+                <form id="registerForm">
+                    <input type="number" id="regUserId"  placeholder="User ID"  required />
+                    <input type="number" id="regEventId" placeholder="Event ID" required />
+                    <button type="submit">Register</button>
+                </form>
+                <p id="registerMsg" class="msg"></p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

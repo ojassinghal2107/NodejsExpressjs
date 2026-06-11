@@ -1,24 +1,29 @@
-const http = require("http");
+// app.js
+require("dotenv").config();
+const express = require("express");
+const path    = require("path");
+const userRoutes         = require("./routes/userRoutes");
+const eventRoutes        = require("./routes/eventRoutes");
+const registrationRoutes = require("./routes/registerationRoutes");
 
-const {getUser} = require("./controllers/usercontroller");
+const app  = express();
+const PORT = 5000;
 
-const server = http.createServer((req, res) => {
+app.use(express.json());
 
-    if (req.url === "/user/1") {
-        getUser(req, res, 1);
-    }
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, "public")));
 
-    else if (req.url === "/user/2") {
-        getUser(req, res, 2);
-    }
+// Mount API endpoints
+app.use("/api/users",    userRoutes);
+app.use("/api/events",   eventRoutes);
+app.use("/api/register", registrationRoutes);
 
-    else {
-        res.writeHead(404);
-        res.end("Route Not Found");
-    }
-
+// Root → serve index.html
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-server.listen(5000, () => {
-    console.log("Server running on port 5000");
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

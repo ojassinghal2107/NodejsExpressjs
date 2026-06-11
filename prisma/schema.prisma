@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  name          String
+  createdAt     DateTime       @default(now())
+  
+  // Relations
+  hostedEvents  Event[]        @relation("EventHost")
+  registrations Registration[]
+}
+
+model Event {
+  id           Int            @id @default(autoincrement())
+  title        String
+  description  String
+  date         DateTime
+  location     String
+  capacity     Int
+  createdAt    DateTime       @default(now())
+  
+  // Relation to the Host (User)
+  hostId       Int
+  host         User           @relation("EventHost", fields: [hostId], references: [id], onDelete: Cascade)
+  
+  // Relation to attendees
+  registrations Registration[]
+}
+
+model Registration {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  eventId      Int
+  registeredAt DateTime @default(now())
+
+  // Relationships
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  // This ensures a user can't register for the same event twice!
+  @@unique([userId, eventId]) 
+}
